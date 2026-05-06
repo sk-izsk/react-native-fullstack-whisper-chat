@@ -1,0 +1,149 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1778106999186,
+  "projectRoot": "/Volumes/Mac Mini 1tb Ext/Projects/React Native/react-native-whisper-chat",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "dev",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "backend": {
+      "path": "backend",
+      "purpose": null,
+      "fileCount": 9,
+      "lastAccessed": 1778106999084,
+      "keyFiles": [
+        "CLAUDE.md",
+        "README.md",
+        "bun.lock",
+        "index.ts",
+        "nodemon.json"
+      ]
+    },
+    "mobile": {
+      "path": "mobile",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1778106999084,
+      "keyFiles": [
+        "README.md",
+        "app.json",
+        "bun.lock",
+        "eslint.config.js",
+        "package.json"
+      ]
+    },
+    "web": {
+      "path": "web",
+      "purpose": null,
+      "fileCount": 9,
+      "lastAccessed": 1778106999087,
+      "keyFiles": [
+        "README.md",
+        "bun.lock",
+        "index.html",
+        "package.json",
+        "tsconfig.app.json"
+      ]
+    },
+    "backend/node_modules": {
+      "path": "backend/node_modules",
+      "purpose": "Dependencies",
+      "fileCount": 0,
+      "lastAccessed": 1778106999092,
+      "keyFiles": []
+    },
+    "backend/src": {
+      "path": "backend/src",
+      "purpose": "Source code",
+      "fileCount": 1,
+      "lastAccessed": 1778106999092,
+      "keyFiles": [
+        "app.ts"
+      ]
+    },
+    "mobile/app": {
+      "path": "mobile/app",
+      "purpose": "Application code",
+      "fileCount": 2,
+      "lastAccessed": 1778106999095,
+      "keyFiles": [
+        "_layout.tsx",
+        "modal.tsx"
+      ]
+    },
+    "mobile/assets": {
+      "path": "mobile/assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1778106999097,
+      "keyFiles": []
+    },
+    "mobile/components": {
+      "path": "mobile/components",
+      "purpose": "UI components",
+      "fileCount": 6,
+      "lastAccessed": 1778106999100,
+      "keyFiles": [
+        "external-link.tsx",
+        "haptic-tab.tsx",
+        "hello-wave.tsx"
+      ]
+    },
+    "web/node_modules": {
+      "path": "web/node_modules",
+      "purpose": "Dependencies",
+      "fileCount": 0,
+      "lastAccessed": 1778106999102,
+      "keyFiles": []
+    },
+    "web/public": {
+      "path": "web/public",
+      "purpose": "Public files",
+      "fileCount": 2,
+      "lastAccessed": 1778106999102,
+      "keyFiles": [
+        "favicon.svg",
+        "icons.svg"
+      ]
+    },
+    "web/src": {
+      "path": "web/src",
+      "purpose": "Source code",
+      "fileCount": 4,
+      "lastAccessed": 1778106999107,
+      "keyFiles": [
+        "App.css",
+        "App.tsx",
+        "index.css"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

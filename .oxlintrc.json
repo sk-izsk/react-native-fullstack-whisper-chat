@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "$schema": "./backend/node_modules/oxlint/configuration_schema.json",
   "plugins": ["typescript", "unicorn", "react"],
   "categories": {},
   "rules": {
@@ -38,5 +38,5 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": ["dist"]
+  "ignorePatterns": ["dist", "**/node_modules"]
 }
