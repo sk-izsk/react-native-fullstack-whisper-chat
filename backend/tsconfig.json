@@ -1,29 +1,17 @@
 {
   "compilerOptions": {
-    // Environment setup & latest features
-    "lib": ["ESNext"],
-    "target": "ESNext",
-    "module": "Preserve",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": true,
-
-    // Bundler mode
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
-
-    // Best practices
-    "strict": true,
-    "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-
-    // Some stricter flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false
-  }
+    "rootDir": "./src", // Where your source files are
+    "outDir": "./dist", // Where compiled JS goes
+    "module": "Node16", // Match modern Node module semantics
+    "target": "es2022", // JS version to compile to (modern)
+    "esModuleInterop": true, // Allows `import x from 'y'` syntax with CommonJS modules
+    "strict": true, // Enables all strict type-checking
+    "skipLibCheck": true, // Skips type-checking .d.ts files (faster builds)
+    "moduleResolution": "node16", // Modern Node resolution; avoids deprecated node10 mode
+    "resolveJsonModule": true, // Allows importing .json files
+    "forceConsistentCasingInFileNames": true, // Prevents case-sensitivity bugs
+    "types": ["node"] // Load Node globals like process and console
+  },
+  "include": ["src/**/*.ts"], // Which files to compile
+  "exclude": ["node_modules"] // Which files to ignore
 }
