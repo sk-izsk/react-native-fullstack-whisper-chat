@@ -1,6 +1,6 @@
 import { clerkClient, getAuth } from '@clerk/express'
-import { NextFunction, Request, Response } from 'express'
-import { AuthRequest } from '../middleware/auth.js'
+import type { NextFunction, Request, Response } from 'express'
+import type { AuthRequest } from '../middleware/auth.js'
 import { User } from '../models/User.js'
 
 export const getMe = async (req: AuthRequest, res: Response, next: NextFunction) => {
