@@ -1,5 +1,7 @@
+import { clerkMiddleware } from '@clerk/express'
 import cors from 'cors'
 import express from 'express'
+import { errorHandler } from './middleware/errorHandler.js'
 import authRoutes from './routes/authRoute.js'
 import chatRoutes from './routes/chatRoute.js'
 import messageRoutes from './routes/messageRoute.js'
@@ -14,6 +16,7 @@ app.use(
     extended: true,
   }),
 )
+app.use(clerkMiddleware())
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'Server is healthy' })
@@ -23,5 +26,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/chats', chatRoutes)
 app.use('/api/messages', messageRoutes)
 app.use('/api/users', userRoutes)
+
+app.use(errorHandler)
 
 export default app
