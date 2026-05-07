@@ -18,8 +18,9 @@ export const protectRoute = [
       }
       req.userId = user._id.toString()
       next()
-    } catch {
-      res.status(401).json({ error: 'Unauthorized' })
+    } catch (err) {
+      res.status(500).json({ error: 'Server error' })
+      next(err)
     }
   },
 ]

@@ -14,9 +14,9 @@ export const getMe = async (req: AuthRequest, res: Response, next: NextFunction)
     }
 
     res.json(user)
-  } catch {
+  } catch (err) {
     res.status(500).json({ message: 'Server error' })
-    next()
+    next(err)
   }
 }
 
@@ -40,7 +40,7 @@ export const authCallback = async (req: Request, res: Response, next: NextFuncti
         email: clerkUser.emailAddresses[0].emailAddress,
         name: clerkUser.firstName
           ? `${clerkUser.firstName} ${clerkUser.lastName || ''}`.trim()
-          : clerkUser.emailAddresses[0].emailAddress.split('@')[0],
+          : clerkUser.emailAddresses[0].emailAddress?.split('@')[0],
         avatar: clerkUser.imageUrl,
       })
     }
