@@ -1,13 +1,9 @@
 import { verifyToken } from '@clerk/express'
 import { Server as HttpServer } from 'http'
-import { Socket, Server as SocketServer } from 'socket.io'
+import { Server as SocketServer } from 'socket.io'
 import { Chat } from '../models/Chat.js'
 import { Message } from '../models/Message.js'
 import { User } from '../models/User.js'
-
-interface SocketWithUser extends Socket {
-  userId?: string
-}
 
 interface SocketSendMessageData {
   chatId: string
@@ -20,7 +16,7 @@ const allowedOrigins = [
   'http://localhost:8081',
   'http://localhost:5173',
   process.env.FRONTEND_URL as string,
-]
+].filter(Boolean)
 
 export const initializeSocket = (httpServer: HttpServer) => {
   const io = new SocketServer(httpServer, {
@@ -29,7 +25,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
     },
   })
 
-  io.use(async (socket: SocketWithUser, next) => {
+  io.use(async (socket, next) => {
     const token = socket.handshake.auth.token
     if (!token) {
       return next(new Error('Authentication error: No token provided'))
@@ -47,15 +43,15 @@ export const initializeSocket = (httpServer: HttpServer) => {
         return next(new Error('Authentication error: User not found'))
       }
 
-      socket.userId = user._id.toString()
+      socket.data.userId = user._id.toString()
       next()
     } catch (error: any) {
       return next(new Error(error))
     }
   })
 
-  io.on('connection', (socket: SocketWithUser) => {
-    const userId = socket.userId
+  io.on('connection', (socket) => {
+    const userId = socket.data.userId
 
     // send the list of online user
     socket.emit('online-users', {
@@ -100,7 +96,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
         chat.lastMessage = message._id
         chat.lastMessageAt = new Date()
         await chat.save()
-        await message.populate('sender', 'name email avatar')
+        await message.populate('sender', 'name avatar')
 
         io.to(`chat:${chatId}`).emit('new-message', {
           message,
