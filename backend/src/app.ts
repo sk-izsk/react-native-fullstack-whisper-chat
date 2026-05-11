@@ -32,14 +32,18 @@ app.use('/api/chats', chatRoutes)
 app.use('/api/messages', messageRoutes)
 app.use('/api/users', userRoutes)
 
-app.use(errorHandler)
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(webDistPath))
+
+  app.get('/', (_, res) => {
+    res.sendFile(path.join(webDistPath, 'index.html'))
+  })
 
   app.get('/{*any}', (_, res) => {
     res.sendFile(path.join(webDistPath, 'index.html'))
   })
 }
+
+app.use(errorHandler)
 
 export default app
