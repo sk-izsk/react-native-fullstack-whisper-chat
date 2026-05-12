@@ -5,7 +5,20 @@ import '../global.css'
 const RootLayout = () => {
   return (
     <AppProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0D0D0F' } }}>
+        <Stack.Screen
+          name="(auth)"
+          options={{
+            animation: 'fade',
+          }}
+        />
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            animation: 'fade',
+          }}
+        />
+      </Stack>
     </AppProvider>
   )
 }
