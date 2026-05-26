@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { ActivityIndicator, FlatList, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, Pressable, Text, View } from 'react-native'
 import { ChatHeader } from '../../components/ChatHeader'
 import { ChatItem } from '../../components/ChatItem'
 import EmptyUI from '../../components/EmptyUI'
@@ -9,7 +9,7 @@ import { Chat } from '../../lib/socket'
 
 const ChatsTab = () => {
   const router = useRouter()
-  const { data: chats, isLoading, error } = useChats()
+  const { data: chats, isLoading, error, refetch } = useChats()
   console.log('error: ', error)
   console.log('isLoading: ', isLoading)
   console.log('chats: ', chats)
@@ -26,6 +26,9 @@ const ChatsTab = () => {
     return (
       <View className="items-center justify-center flex-1 bg-surface">
         <Text className="text-red-500"> Failed to load chats</Text>
+        <Pressable onPress={() => refetch()} className="px-4 py-2 mt-4 rounded-lg bg-primary">
+          <Text className="text-foreground">Retry</Text>
+        </Pressable>
       </View>
     )
   }
