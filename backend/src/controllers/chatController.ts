@@ -11,7 +11,6 @@ export const getChats = async (req: AuthRequest, res: Response, next: NextFuncti
       .populate('participants', 'name email avatar')
       .populate('lastMessage')
       .sort({ lastMessageAt: -1 })
-    res.status(200).json(chats)
 
     const formattedChats = chats.map((chat) => {
       const otherParticipant = chat.participants.find((p) => p._id.toString() !== userId)

@@ -1,12 +1,11 @@
 import { Router } from 'express'
-import { getChats, getOrCreateChat } from '../controllers/chatController.js'
+import { getMessages } from '../controllers/messageController.js'
 import { protectRoute } from '../middleware/auth.js'
 
 const router = Router()
 
 router.use(protectRoute)
 
-router.get('/', getChats)
-router.get('/with/:participantId', getOrCreateChat)
+router.get('/chat/:chatId', getMessages)
 
 export default router
