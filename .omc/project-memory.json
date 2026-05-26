@@ -1,0 +1,159 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779835495818,
+  "projectRoot": "/Volumes/Mac Mini 1tb Ext/Projects/React Native/react-native-whisper-chat",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "dev",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "backend": {
+      "path": "backend",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1779835495749,
+      "keyFiles": [
+        "CLAUDE.md",
+        "README.md",
+        "bun.lock",
+        "package.json",
+        "tsconfig.json"
+      ]
+    },
+    "mobile": {
+      "path": "mobile",
+      "purpose": null,
+      "fileCount": 15,
+      "lastAccessed": 1779835495749,
+      "keyFiles": [
+        "AppProvider.tsx",
+        "README.md",
+        "app.json",
+        "babel.config.js",
+        "bun.lock"
+      ]
+    },
+    "web": {
+      "path": "web",
+      "purpose": null,
+      "fileCount": 10,
+      "lastAccessed": 1779835495749,
+      "keyFiles": [
+        "README.md",
+        "bun.lock",
+        "index.html",
+        "package.json",
+        "tsconfig.app.json"
+      ]
+    },
+    "backend/dist": {
+      "path": "backend/dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 2,
+      "lastAccessed": 1779835495749,
+      "keyFiles": [
+        "app.js",
+        "index.js"
+      ]
+    },
+    "backend/node_modules": {
+      "path": "backend/node_modules",
+      "purpose": "Dependencies",
+      "fileCount": 0,
+      "lastAccessed": 1779835495749,
+      "keyFiles": []
+    },
+    "backend/src": {
+      "path": "backend/src",
+      "purpose": "Source code",
+      "fileCount": 2,
+      "lastAccessed": 1779835495749,
+      "keyFiles": [
+        "app.ts",
+        "index.ts"
+      ]
+    },
+    "mobile/app": {
+      "path": "mobile/app",
+      "purpose": "Application code",
+      "fileCount": 1,
+      "lastAccessed": 1779835495750,
+      "keyFiles": [
+        "_layout.tsx"
+      ]
+    },
+    "mobile/assets": {
+      "path": "mobile/assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1779835495750,
+      "keyFiles": []
+    },
+    "web/dist": {
+      "path": "web/dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 3,
+      "lastAccessed": 1779835495750,
+      "keyFiles": [
+        "favicon.svg",
+        "icons.svg",
+        "index.html"
+      ]
+    },
+    "web/node_modules": {
+      "path": "web/node_modules",
+      "purpose": "Dependencies",
+      "fileCount": 0,
+      "lastAccessed": 1779835495750,
+      "keyFiles": []
+    },
+    "web/public": {
+      "path": "web/public",
+      "purpose": "Public files",
+      "fileCount": 2,
+      "lastAccessed": 1779835495750,
+      "keyFiles": [
+        "favicon.svg",
+        "icons.svg"
+      ]
+    },
+    "web/src": {
+      "path": "web/src",
+      "purpose": "Source code",
+      "fileCount": 5,
+      "lastAccessed": 1779835495750,
+      "keyFiles": [
+        "App.css",
+        "App.tsx",
+        "AppProvider.tsx"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

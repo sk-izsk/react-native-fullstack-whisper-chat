@@ -47,13 +47,30 @@ export const useApi = () => {
     async <T>({ url, headers, ...config }: KyRequestConfig) => {
       const token = await getToken()
 
-      return api(url, {
+      const response = await api(url, {
         ...config,
         headers: {
           ...headers,
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-      }).json<T>()
+      })
+
+      const contentType = response.headers.get('content-type') ?? ''
+
+      if (!contentType.includes('application/json')) {
+        const responseText = await response.text()
+        const message = `Expected JSON from ${response.url}, received ${contentType || 'unknown content type'}`
+
+        Sentry.logger.error(message, {
+          endpoint: response.url,
+          contentType,
+          bodyPreview: responseText.slice(0, 200),
+        })
+
+        throw new Error(message)
+      }
+
+      return response.json<T>()
     },
     [getToken],
   )
