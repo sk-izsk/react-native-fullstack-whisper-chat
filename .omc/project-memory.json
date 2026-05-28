@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1779835495818,
+  "lastScanned": 1780011284632,
   "projectRoot": "/Volumes/Mac Mini 1tb Ext/Projects/React Native/react-native-whisper-chat",
   "techStack": {
     "languages": [],
@@ -36,7 +36,7 @@
       "path": "backend",
       "purpose": null,
       "fileCount": 7,
-      "lastAccessed": 1779835495749,
+      "lastAccessed": 1780011284535,
       "keyFiles": [
         "CLAUDE.md",
         "README.md",
@@ -48,8 +48,8 @@
     "mobile": {
       "path": "mobile",
       "purpose": null,
-      "fileCount": 15,
-      "lastAccessed": 1779835495749,
+      "fileCount": 14,
+      "lastAccessed": 1780011284535,
       "keyFiles": [
         "AppProvider.tsx",
         "README.md",
@@ -62,7 +62,7 @@
       "path": "web",
       "purpose": null,
       "fileCount": 10,
-      "lastAccessed": 1779835495749,
+      "lastAccessed": 1780011284535,
       "keyFiles": [
         "README.md",
         "bun.lock",
@@ -75,7 +75,7 @@
       "path": "backend/dist",
       "purpose": "Distribution/build output",
       "fileCount": 2,
-      "lastAccessed": 1779835495749,
+      "lastAccessed": 1780011284537,
       "keyFiles": [
         "app.js",
         "index.js"
@@ -85,14 +85,14 @@
       "path": "backend/node_modules",
       "purpose": "Dependencies",
       "fileCount": 0,
-      "lastAccessed": 1779835495749,
+      "lastAccessed": 1780011284539,
       "keyFiles": []
     },
     "backend/src": {
       "path": "backend/src",
       "purpose": "Source code",
       "fileCount": 2,
-      "lastAccessed": 1779835495749,
+      "lastAccessed": 1780011284540,
       "keyFiles": [
         "app.ts",
         "index.ts"
@@ -102,7 +102,7 @@
       "path": "mobile/app",
       "purpose": "Application code",
       "fileCount": 1,
-      "lastAccessed": 1779835495750,
+      "lastAccessed": 1780011284541,
       "keyFiles": [
         "_layout.tsx"
       ]
@@ -111,14 +111,14 @@
       "path": "mobile/assets",
       "purpose": "Static assets",
       "fileCount": 0,
-      "lastAccessed": 1779835495750,
+      "lastAccessed": 1780011284542,
       "keyFiles": []
     },
     "web/dist": {
       "path": "web/dist",
       "purpose": "Distribution/build output",
       "fileCount": 3,
-      "lastAccessed": 1779835495750,
+      "lastAccessed": 1780011284542,
       "keyFiles": [
         "favicon.svg",
         "icons.svg",
@@ -129,14 +129,14 @@
       "path": "web/node_modules",
       "purpose": "Dependencies",
       "fileCount": 0,
-      "lastAccessed": 1779835495750,
+      "lastAccessed": 1780011284544,
       "keyFiles": []
     },
     "web/public": {
       "path": "web/public",
       "purpose": "Public files",
       "fileCount": 2,
-      "lastAccessed": 1779835495750,
+      "lastAccessed": 1780011284544,
       "keyFiles": [
         "favicon.svg",
         "icons.svg"
@@ -146,7 +146,7 @@
       "path": "web/src",
       "purpose": "Source code",
       "fileCount": 5,
-      "lastAccessed": 1779835495750,
+      "lastAccessed": 1780011284544,
       "keyFiles": [
         "App.css",
         "App.tsx",
