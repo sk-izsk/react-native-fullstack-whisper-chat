@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useApi } from '../lib/ky'
-import { Chat } from '../lib/socket'
+import { Chat } from '../types'
 
 const isLegacyChatsRouteError = (error: unknown) => {
   if (!(error instanceof Error)) {
@@ -34,6 +34,24 @@ export const useChats = () => {
           method: 'GET',
         })
       }
+    },
+  })
+}
+
+export const useGetOrCreateChat = () => {
+  const { apiWithAuth } = useApi()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (participantId: string) => {
+      const data = await apiWithAuth<Chat>({
+        method: 'GET',
+        url: `/chats/with/${participantId}`,
+      })
+      return data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['chats'] })
     },
   })
 }

@@ -3,7 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { Image } from 'expo-image'
 import React from 'react'
 import { Pressable, Text, View } from 'react-native'
-import { Chat } from '../../lib/socket'
+import { Chat } from '../../types'
 
 dayjs.extend(relativeTime)
 

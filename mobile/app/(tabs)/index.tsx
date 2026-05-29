@@ -5,7 +5,7 @@ import { ChatHeader } from '../../components/Chat/ChatHeader'
 import { ChatItem } from '../../components/Chat/ChatItem'
 import EmptyUI from '../../components/EmptyUI'
 import { useChats } from '../../hooks/useChats'
-import { Chat } from '../../lib/socket'
+import { Chat } from '../../types'
 
 const ChatsTab = () => {
   const router = useRouter()
@@ -63,7 +63,7 @@ const ChatsTab = () => {
             iconColor="#6B6B70"
             iconSize={64}
             buttonLabel="New Chat"
-            // onPressButton={() => router.push('/new-chat')}
+            onPressButton={() => router.push('/new-chat')}
           />
         }
       />
