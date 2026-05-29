@@ -32,6 +32,14 @@ const RootLayout = () => {
             animation: 'fade',
           }}
         />
+        <Stack.Screen
+          name="new-chat"
+          options={{
+            animation: 'slide_from_bottom',
+            presentation: 'modal',
+            gestureEnabled: true,
+          }}
+        />
       </Stack>
     </AppProvider>
   )

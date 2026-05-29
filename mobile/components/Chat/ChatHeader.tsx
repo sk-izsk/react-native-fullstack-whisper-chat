@@ -11,7 +11,7 @@ export const ChatHeader: React.FC = () => {
         <Text className="text-2xl font-bold text-foreground">Chats</Text>
         <Pressable
           className="items-center justify-center rounded-full size-10 bg-primary"
-          // onPress={() => router.push("/new-chat")}
+          onPress={() => router.push('/new-chat')}
         >
           <Ionicons name="create-outline" size={20} color="#0D0D0F" />
         </Pressable>
