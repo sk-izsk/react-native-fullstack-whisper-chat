@@ -114,9 +114,24 @@ export const initializeSocket = (httpServer: HttpServer) => {
 
     // typing
 
-    socket.on('typing', (data: { chatId: string }) => {
-      const { chatId } = data
-      socket.broadcast.to(`chat:${chatId}`).emit('typing', { userId })
+    socket.on('typing', async (data: { chatId: string; isTyping: boolean }) => {
+      const typingPayload = {
+        userId,
+        chatId: data.chatId,
+        isTyping: data.isTyping,
+      }
+
+      socket.to(`chat:${data.chatId}`).emit('typing', typingPayload)
+
+      try {
+        const chat = await Chat.findById(data.chatId)
+        if (chat) {
+          const otherParticipantId = chat.participants.find((p: any) => p.toString() !== userId)
+          if (otherParticipantId) {
+            socket.to(`user:${otherParticipantId}`).emit('typing', typingPayload)
+          }
+        }
+      } catch {}
     })
 
     // when the user disconnects, remove them from the onlineUsers map and notify other users

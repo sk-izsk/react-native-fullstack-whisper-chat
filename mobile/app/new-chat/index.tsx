@@ -6,10 +6,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { UserItem } from '../../components/UserItem'
 import { useGetOrCreateChat } from '../../hooks/useChats'
 import { useUsers } from '../../hooks/useUsers'
+import { useSocketStore } from '../../lib/socket'
 import { Chat, User } from '../../types'
 
 const NewChatScreen = () => {
   const [searchQuery, setSearchQuery] = useState('')
+
+  const { onlineUsers } = useSocketStore()
 
   const { data: allUsers, isLoading } = useUsers()
   const {
@@ -110,7 +113,7 @@ const NewChatScreen = () => {
                   <UserItem
                     key={user._id}
                     user={user}
-                    isOnline={false}
+                    isOnline={onlineUsers.has(user._id)}
                     onPress={() => handleUserSelect(user)}
                   />
                 ))}

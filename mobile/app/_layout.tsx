@@ -3,6 +3,7 @@ import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { AppProvider } from '../AppProvider'
 import { AuthSync } from '../components/AuthSync'
+import { SocketConnection } from '../components/SocketConnection'
 import '../global.css'
 
 Sentry.init({
@@ -18,6 +19,7 @@ const RootLayout = () => {
   return (
     <AppProvider>
       <AuthSync />
+      <SocketConnection />
       <StatusBar style="light" />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0D0D0F' } }}>
         <Stack.Screen
