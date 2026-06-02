@@ -102,7 +102,8 @@ export const useSocketStore = create<SocketState>((set, get) => ({
       })
     })
 
-    socket.on('new-message', (message: Message) => {
+    socket.on('new-message', (payload: Message | { message: Message }) => {
+      const message = 'message' in payload ? payload.message : payload
       const senderId = (message.sender as MessageSender)._id
       const { currentChatId } = get()
 
