@@ -4,15 +4,17 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { MessageBubble } from '../../components/Chat/MessageBubble'
 import EmptyUI from '../../components/EmptyUI'
 import { useCurrentUser } from '../../hooks/useAuthCallback'
@@ -31,8 +33,10 @@ const ChatDetailScreen: React.FC = () => {
   const { id: chatId, participantId, name, avatar } = useLocalSearchParams<ChatParams>()
   const [message, setMessage] = useState('')
   const [isSending, setIsSending] = useState(false)
+  const [keyboardHeight, setKeyboardHeight] = useState(0)
 
   const scrollViewRef = useRef<ScrollView>(null)
+  const insets = useSafeAreaInsets()
 
   const { data: currentUser } = useCurrentUser()
 
@@ -42,7 +46,7 @@ const ChatDetailScreen: React.FC = () => {
     useSocketStore()
 
   const isOnline = participantId ? onlineUsers.has(participantId) : false
-  const isTyping = participantId ? typingUsers.has(participantId) : false
+  const isTyping = chatId && participantId ? typingUsers.get(chatId) === participantId : false
 
   const typingTimeOutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -65,6 +69,28 @@ const ChatDetailScreen: React.FC = () => {
       }, 100)
     }
   }, [messages])
+
+  useEffect(() => {
+    if (Platform.OS !== 'android') {
+      return
+    }
+
+    const showSubscription = Keyboard.addListener('keyboardDidShow', (event) => {
+      setKeyboardHeight(Math.max(0, event.endCoordinates.height - insets.bottom))
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true })
+      }, 50)
+    })
+
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardHeight(0)
+    })
+
+    return () => {
+      showSubscription.remove()
+      hideSubscription.remove()
+    }
+  }, [insets.bottom])
 
   const handleTyping = useCallback(
     (text: string) => {
@@ -149,7 +175,7 @@ const ChatDetailScreen: React.FC = () => {
 
       <KeyboardAvoidingView
         className="flex-1"
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={0}
       >
         <View className="flex-1 bg-surface">
@@ -168,6 +194,7 @@ const ChatDetailScreen: React.FC = () => {
           ) : (
             <ScrollView
               ref={scrollViewRef}
+              className="flex-1"
               contentContainerStyle={{
                 paddingHorizontal: 16,
                 paddingVertical: 12,
@@ -183,8 +210,15 @@ const ChatDetailScreen: React.FC = () => {
               })}
             </ScrollView>
           )}
-
-          <View className="px-3 pt-2 pb-3 border-t bg-surface border-surface-light">
+          <View
+            className="px-3 pt-2 border-t bg-surface border-surface-light"
+            style={[
+              styles.composer,
+              {
+                paddingBottom: 12 + keyboardHeight,
+              },
+            ]}
+          >
             <View className="flex-row items-end bg-surface-card rounded-3xl px-3 py-1.5 gap-2">
               <Pressable className="items-center justify-center w-8 h-8 rounded-full">
                 <Ionicons name="add" size={22} color="#F4A261" />
@@ -220,3 +254,9 @@ const ChatDetailScreen: React.FC = () => {
 }
 
 export default ChatDetailScreen
+
+const styles = StyleSheet.create({
+  composer: {
+    marginBottom: 0,
+  },
+})
