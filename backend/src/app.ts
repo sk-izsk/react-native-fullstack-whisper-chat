@@ -1,8 +1,8 @@
 import { clerkMiddleware } from '@clerk/express'
 import cors from 'cors'
 import express from 'express'
-import { fileURLToPath } from 'url'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { errorHandler } from './middleware/errorHandler.js'
 import authRoutes from './routes/authRoute.js'
 import chatRoutes from './routes/chatRoute.js'
@@ -14,7 +14,14 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const webDistPath = path.resolve(__dirname, '../../web/dist')
 
-app.use(cors({}))
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:8081', process.env.FRONTEND_URL]
+
+app.use(
+  cors({
+    origin: allowedOrigins as string[],
+    credentials: true,
+  }),
+)
 app.use(express.json())
 app.use(
   express.urlencoded({

@@ -1,6 +1,7 @@
-import { ClerkProvider } from '@clerk/react'
+import { ClerkProvider } from '@clerk/clerk-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React, { type PropsWithChildren } from 'react'
+import { BrowserRouter } from 'react-router'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -13,7 +14,9 @@ const queryClient = new QueryClient()
 export const AppProvider: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>{children}</ClerkProvider>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </ClerkProvider>
     </QueryClientProvider>
   )
 }
