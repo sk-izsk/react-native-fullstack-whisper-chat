@@ -3,7 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { Image } from 'expo-image'
 import React from 'react'
 import { Pressable, Text, View } from 'react-native'
-import { useSocketStore } from '../../lib/socket'
+import { useIsChatTyping, useIsChatUnread, useIsUserOnline } from '../../lib/socket'
 import { Chat } from '../../types'
 
 dayjs.extend(relativeTime)
@@ -16,10 +16,9 @@ interface Props {
 export const ChatItem: React.FC<Props> = ({ chat, onPress }) => {
   const participant = chat.participant
 
-  const { onlineUsers, typingUsers, unreadChats } = useSocketStore()
-  const isOnline = onlineUsers.has(participant._id)
-  const isTyping = typingUsers.get(chat._id) === participant._id
-  const hasUnReadMessages = unreadChats.has(chat._id)
+  const isOnline = useIsUserOnline(participant._id)
+  const isTyping = useIsChatTyping(chat._id, participant._id)
+  const hasUnReadMessages = useIsChatUnread(chat._id)
   return (
     <Pressable className="flex-row items-center py-3 active:opacity-70" onPress={onPress}>
       <View className="relative">

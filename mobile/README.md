@@ -1,50 +1,96 @@
-# Welcome to your Expo app 👋
+# Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This folder contains the React Native mobile client for Whisper Chat. It targets iOS and Android through Expo and mirrors the core product behavior of the web client while keeping mobile-native routing and interaction patterns.
 
-## Get started
+## Stack
 
-1. Install dependencies
+- React Native
+- Expo
+- Expo Router
+- TypeScript
+- Clerk Expo
+- TanStack Query
+- Zustand
+- NativeWind
+- Socket.IO Client
+- Sentry
+- `ky`
 
-   ```bash
-   npm install
-   ```
+## Core Features
 
-2. Start the app
+- social sign-in flow
+- authenticated user sync to backend
+- chat list and message history
+- new chat creation
+- realtime message delivery
+- typing indicators
+- presence tracking
+- optimistic sends
+- mobile error monitoring
 
-   ```bash
-   npx expo start
-   ```
+## Why This Stack Is Strong
 
-In the output, you'll find options to open the app in a
+### Expo
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Expo reduces native setup friction and keeps the project focused on product engineering instead of infrastructure setup.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Expo Router
 
-## Get a fresh project
+File-based routing keeps navigation structure readable and maps naturally to auth screens, tabs, chat detail, and modal flows.
 
-When you're ready, run:
+### TanStack Query + Zustand
+
+The same clear state split used on web also works well here:
+
+- Query handles backend-owned data
+- Zustand handles socket-oriented transient state
+
+That keeps the mobile app easier to reason about as features grow.
+
+### Sentry
+
+Sentry is especially useful on mobile because device-specific bugs and runtime issues are harder to inspect manually than browser errors.
+
+## Important Folders
+
+- `app/`
+- `components/`
+- `hooks/`
+- `lib/`
+
+## Engineering Notes
+
+- root-level auth sync and socket connection keep route components cleaner
+- keyboard inset logic is isolated instead of mixed through the whole chat screen
+- chat room behavior is extracted into hooks
+- socket logic is split into focused modules for readability and safer refactors
+
+## Run Locally
 
 ```bash
-npm run reset-project
+cd mobile
+bun install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Type Checking
 
-## Learn more
+```bash
+cd mobile
+./node_modules/.bin/tsc --noEmit -p tsconfig.json
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Environment
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Relevant values from the current code:
 
-## Join the community
+- `EXPO_PUBLIC_API_URL`
+- Clerk publishable key configuration used by the app
 
-Join our community of developers creating universal apps.
+## Learning Value
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This mobile app is a good reference for:
+
+- building a realtime React Native product
+- combining auth, navigation, sockets, and cached data
+- maintaining cross-platform product consistency without forcing a shared UI layer

@@ -10,26 +10,14 @@ import { Chat } from '../../types'
 const ChatsTab = () => {
   const router = useRouter()
   const { data: chats, isLoading, error, refetch } = useChats()
-  console.log('error: ', error)
-  console.log('isLoading: ', isLoading)
-  console.log('chats: ', chats)
 
   if (isLoading) {
-    return (
-      <View className="items-center justify-center flex-1 bg-surface">
-        <ActivityIndicator size="large" color="#f4a261" />
-      </View>
-    )
+    return <ChatsLoadingState />
   }
 
   if (error) {
     return (
-      <View className="items-center justify-center flex-1 bg-surface">
-        <Text className="text-red-500"> Failed to load chats</Text>
-        <Pressable onPress={() => refetch()} className="px-4 py-2 mt-4 rounded-lg bg-primary">
-          <Text className="text-foreground">Retry</Text>
-        </Pressable>
-      </View>
+      <ChatsErrorState onRetry={() => refetch()} />
     )
   }
 
@@ -72,3 +60,18 @@ const ChatsTab = () => {
 }
 
 export default ChatsTab
+
+const ChatsLoadingState = () => (
+  <View className="items-center justify-center flex-1 bg-surface">
+    <ActivityIndicator size="large" color="#f4a261" />
+  </View>
+)
+
+const ChatsErrorState = ({ onRetry }: { onRetry: () => void }) => (
+  <View className="items-center justify-center flex-1 bg-surface">
+    <Text className="text-red-500">Failed to load chats</Text>
+    <Pressable onPress={onRetry} className="px-4 py-2 mt-4 rounded-lg bg-primary">
+      <Text className="text-foreground">Retry</Text>
+    </Pressable>
+  </View>
+)
