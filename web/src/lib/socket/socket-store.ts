@@ -76,7 +76,7 @@ export const useSocketStore = create<SocketStore>((set, get, store) => ({
 
     socket.emit('send-message', { chatId, text })
 
-    const errorHandler = (error: { message: string }) => {
+    const errorHandler = (_error: { message: string }) => {
       removeMessageById(queryClient, chatId, optimisticMessage._id)
       socket.off('socket-error', errorHandler)
     }
@@ -114,12 +114,12 @@ export const useSocketActions = () =>
   useSocketStore(
     useShallow(
       (state): SocketActions => ({
-      connect: state.connect,
-      disconnect: state.disconnect,
-      joinChat: state.joinChat,
-      leaveChat: state.leaveChat,
-      sendMessage: state.sendMessage,
-      sendTyping: state.sendTyping,
+        connect: state.connect,
+        disconnect: state.disconnect,
+        joinChat: state.joinChat,
+        leaveChat: state.leaveChat,
+        sendMessage: state.sendMessage,
+        sendTyping: state.sendTyping,
       }),
     ),
   )
