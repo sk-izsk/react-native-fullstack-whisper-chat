@@ -11,8 +11,6 @@ import { useChatRoom } from './chat/useChatRoom'
 
 interface Props {}
 
-interface SearchParams {}
-
 const ChatScreen: React.FC<Props> = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const activeChatId = searchParams.get('chat')
