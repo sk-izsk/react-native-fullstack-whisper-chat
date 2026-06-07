@@ -13,3 +13,15 @@ export const useUsers = () => {
     },
   })
 }
+
+export const useCurrentUser = () => {
+  const { apiWithAuth } = useApi()
+
+  return useQuery({
+    queryKey: ['currentUser'],
+    queryFn: async () => {
+      const data = await apiWithAuth<User>({ method: 'GET', url: '/auth/me' })
+      return data
+    },
+  })
+}
