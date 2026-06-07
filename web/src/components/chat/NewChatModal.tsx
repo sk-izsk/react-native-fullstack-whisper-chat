@@ -1,7 +1,8 @@
 import { SearchIcon, UsersIcon } from 'lucide-react'
 import { useState } from 'react'
+import { useUserSearch } from '../../hooks/useUserSearch'
 import { useUsers } from '../../hooks/useUsers'
-import { useSocketStore } from '../../lib/socket'
+import { useOnlineUsers } from '../../lib/socket'
 import type { User } from '../../types'
 
 interface NewChatModalProps {
@@ -18,7 +19,7 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({
   onClose,
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
-  const { onlineUsers } = useSocketStore()
+  const onlineUsers = useOnlineUsers()
   const { data: allUsers = [] } = useUsers()
   const isOnline = (id: string) => onlineUsers.has(id)
 
@@ -28,13 +29,7 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({
     onClose()
   }
 
-  const searchResults = allUsers.filter((u: User) => {
-    if (!searchQuery.trim()) {
-      return false
-    }
-    const query = searchQuery.toLowerCase()
-    return u.name?.toLowerCase().includes(query) || u.email?.toLowerCase().includes(query)
-  })
+  const searchResults = useUserSearch(allUsers, searchQuery)
 
   return (
     <dialog className={`modal ${isOpen ? 'modal-open' : ''}`}>

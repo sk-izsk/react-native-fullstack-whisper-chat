@@ -1,4 +1,4 @@
-import { useSocketStore } from '../../lib/socket'
+import { useIsChatTyping, useIsUserOnline } from '../../lib/socket'
 import { formatTime } from '../../lib/util'
 import type { Chat } from '../../types'
 
@@ -9,9 +9,8 @@ interface ChatListItemProps {
 }
 
 export const ChatListItem: React.FC<ChatListItemProps> = ({ chat, isActive, onClick }) => {
-  const { onlineUsers, typingUsers } = useSocketStore()
-  const isOnline = onlineUsers.has(chat.participant?._id)
-  const isTyping = !!typingUsers.get(chat._id)
+  const isOnline = useIsUserOnline(chat.participant?._id)
+  const isTyping = useIsChatTyping(chat._id)
 
   return (
     <button

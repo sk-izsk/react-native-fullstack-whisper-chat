@@ -1,75 +1,98 @@
-# React + TypeScript + Vite
+# Web Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This folder contains the browser client for Whisper Chat. It is a React + TypeScript application built with Vite and designed around authenticated realtime messaging.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- TypeScript
+- Vite
+- React Router
+- Clerk React
+- TanStack Query
+- Zustand
+- Tailwind CSS
+- DaisyUI
+- Socket.IO Client
+- `ky`
 
-## React Compiler
+## What This Client Does
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- signs users in with Clerk
+- fetches chats, users, and messages from the backend
+- connects to the realtime socket layer
+- shows online/offline presence
+- shows typing indicators
+- applies optimistic message updates
+- updates chat previews immediately when new messages arrive
 
-Note: This will impact Vite dev & build performances.
+## Why This Stack Works Well
 
-## Expanding the ESLint configuration
+### React + Vite
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This combination keeps the client fast and straightforward. The app gets modern React ergonomics without a heavy framework layer it does not need.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### TanStack Query
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+TanStack Query is a strong fit for chat data because it handles:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- request lifecycle state
+- cache reuse
+- refetching and invalidation
+- easy reconciliation with incoming socket events
+
+### Zustand
+
+Zustand is used for socket state rather than all app state. That is a good boundary because presence, typing, and connection state are ephemeral and should not be mixed with all fetched data.
+
+### Clerk
+
+Clerk removes most of the auth boilerplate and lets the client consume secure tokens instead of managing auth infrastructure directly.
+
+## Important Folders
+
+- `src/components/`
+- `src/hooks/`
+- `src/lib/`
+- `src/screen/`
+
+## Engineering Notes
+
+- socket logic is split into client, cache, events, and store modules
+- screen logic is extracted into hooks instead of overloading route components
+- auth-aware API requests are centralized through the `ky` helper
+- the app uses narrow Zustand selector hooks to avoid broad store subscriptions
+
+## Run Locally
+
+```bash
+cd web
+bun install
+bun run start
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd web
+bun run build
 ```
+
+## Environment
+
+Required:
+
+- `VITE_CLERK_PUBLISHABLE_KEY`
+
+Optional:
+
+- `VITE_API_INCLUDE_CREDENTIALS`
+
+## Learning Value
+
+This client is a solid reference for:
+
+- structuring a realtime React app
+- combining TanStack Query with Socket.IO
+- keeping server state and local realtime state separate
+- refactoring large screens and stores into smaller layers

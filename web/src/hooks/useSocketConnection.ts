@@ -1,13 +1,14 @@
 import { useAuth } from '@clerk/clerk-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { useSocketStore } from '../lib/socket'
+import { useSocketActions, useSocketStore } from '../lib/socket'
 
 export const useSocketConnection = (activeChatId?: string) => {
   const { getToken, isSignedIn } = useAuth()
   const queryClient = useQueryClient()
 
-  const { socket, connect, disconnect, joinChat, leaveChat } = useSocketStore()
+  const socket = useSocketStore((state) => state.socket)
+  const { connect, disconnect, joinChat, leaveChat } = useSocketActions()
 
   useEffect(() => {
     if (isSignedIn) {

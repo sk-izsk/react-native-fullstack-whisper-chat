@@ -1,42 +1,54 @@
-import { useAuth } from '@clerk/clerk-react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useApi } from '../lib/ky'
 import type { Chat } from '../types'
 
+const isLegacyChatsRouteError = (error: unknown) => {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  return (
+    error.message.includes('/api/chats') &&
+    (error.message.includes('Expected JSON') || error.message.includes('404'))
+  )
+}
+
 export const useChats = () => {
-  const { getToken } = useAuth()
-  const { api } = useApi()
+  const { apiWithAuth } = useApi()
 
   return useQuery<Chat[]>({
     queryKey: ['chats'],
     queryFn: async () => {
-      const token = await getToken()
-      const res = await api.get('/chats', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      try {
+        return await apiWithAuth<Chat[]>({
+          url: '/chats',
+          method: 'GET',
+        })
+      } catch (error) {
+        if (!isLegacyChatsRouteError(error)) {
+          throw error
+        }
 
-      return res.json()
+        return apiWithAuth<Chat[]>({
+          url: '/messages',
+          method: 'GET',
+        })
+      }
     },
   })
 }
 
 export const useGetOrCreateChat = () => {
-  const { getToken } = useAuth()
-  const { api } = useApi()
+  const { apiWithAuth } = useApi()
   const queryClient = useQueryClient()
 
   return useMutation<Chat, unknown, string>({
     mutationKey: ['getOrCreateChat'],
     mutationFn: async (userId: string) => {
-      const token = await getToken()
-      const res = await api.post(`/chats/with/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      return apiWithAuth<Chat>({
+        url: `/chats/with/${userId}`,
+        method: 'GET',
       })
-      return res.json()
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['chats'] })

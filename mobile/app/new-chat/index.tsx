@@ -5,36 +5,18 @@ import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { UserItem } from '../../components/UserItem'
 import { useGetOrCreateChat } from '../../hooks/useChats'
+import { useUserSearch } from '../../hooks/useUserSearch'
 import { useUsers } from '../../hooks/useUsers'
-import { useSocketStore } from '../../lib/socket'
+import { useOnlineUsers } from '../../lib/socket'
 import { Chat, User } from '../../types'
 
 const NewChatScreen = () => {
   const [searchQuery, setSearchQuery] = useState('')
-
-  const { onlineUsers } = useSocketStore()
+  const onlineUsers = useOnlineUsers()
 
   const { data: allUsers, isLoading } = useUsers()
-  const {
-    mutate: getOrCreateChat,
-    isPending: isCreatingChat,
-    isSuccess,
-    isError,
-    error,
-  } = useGetOrCreateChat()
-  console.log('isCreatingChat: ', isCreatingChat)
-  console.log('error: ', error)
-  console.log('isError: ', isError)
-  console.log('isSuccess: ', isSuccess)
-  // const { onlineUsers } = useSocketStore()
-
-  const users = allUsers?.filter((u) => {
-    if (!searchQuery.trim()) {
-      return true
-    }
-    const query = searchQuery.toLowerCase()
-    return u.name?.toLowerCase().includes(query) || u.email?.toLowerCase().includes(query)
-  })
+  const { mutate: getOrCreateChat, isPending: isCreatingChat } = useGetOrCreateChat()
+  const users = useUserSearch(allUsers, searchQuery, false)
 
   const handleUserSelect = (user: User) => {
     getOrCreateChat(user._id, {

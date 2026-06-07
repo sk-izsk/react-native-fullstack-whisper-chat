@@ -1,4 +1,4 @@
-import { useSocketStore } from '@/lib/socket'
+import { useSocketActions } from '@/lib/socket'
 import { useAuth } from '@clerk/clerk-expo'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
@@ -6,8 +6,7 @@ import { useEffect } from 'react'
 export const SocketConnection = () => {
   const { getToken, isLoaded, isSignedIn } = useAuth()
   const queryClient = useQueryClient()
-  const connect = useSocketStore((state) => state.connect)
-  const disconnect = useSocketStore((state) => state.disconnect)
+  const { connect, disconnect } = useSocketActions()
 
   useEffect(() => {
     if (!isLoaded) {

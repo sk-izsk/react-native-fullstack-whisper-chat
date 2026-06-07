@@ -1,4 +1,4 @@
-import { useSocketStore } from '../../lib/socket'
+import { useIsChatTyping, useIsUserOnline } from '../../lib/socket'
 import type { User } from '../../types'
 
 interface ChatHeaderProps {
@@ -7,11 +7,8 @@ interface ChatHeaderProps {
 }
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ participant, chatId }) => {
-  const { onlineUsers, typingUsers } = useSocketStore()
-  const isOnline = onlineUsers.has(participant?._id)
-  // const isTyping = !!typingUsers.get(chatId);
-  const typingUserId = typingUsers.get(chatId)
-  const isTyping = typingUserId && typingUserId === participant?._id
+  const isOnline = useIsUserOnline(participant?._id)
+  const isTyping = useIsChatTyping(chatId, participant?._id)
 
   return (
     <div className="flex items-center h-16 gap-4 px-6 border-b border-base-300 bg-base-200/80">
